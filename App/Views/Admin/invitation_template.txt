@@ -1,0 +1,5 @@
+{% if url %}
+Please click the link below to accept the invitation.
+{{url}}
+The link will expire in the next 48 hours.
+{% endif %}

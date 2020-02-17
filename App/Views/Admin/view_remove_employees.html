@@ -1,0 +1,97 @@
+{% extends "starter.html" %}
+{% block body %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Main content -->
+<section class="card">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Employee List.</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            {% if totalEmployees > 0 %}
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 10px">id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for employee in employees_per_page %}
+                  <tr>
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.names}}</td>
+                    <td>
+                      {{employee.email}}
+                    </td>
+                    <td>{{employee.address}}</td>
+                    <td>
+                    <form class="form-group" action="/Admin/home/removeemployee" method="post">
+                      <input type="hidden" name="id" value="{{employee.id}}">
+
+                     <!-- modal section -->
+
+                                         <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      Remove
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header bg-warning">
+                            <h5 class="modal-title" id="exampleModalCenterTitle" style="color:white;">Alert</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true" style="color:white;">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure you want to deactivate employee account?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" name="removeButton" value="Remove">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                     <!-- end modal section -->
+                     </form>
+
+                    </td>
+                  </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-right">
+                {% for i in paginatedPages %}
+
+                {% if i > 1 %}
+                <li class="page-item"><a class="page-link" href="/Admin/home/{{i - 1}}/removeemployeeindex">&laquo;</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="/Admin/home/{{i}}/removeemployeeindex">{{i}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <!-- /.card -->
+            {% else %}
+            <div class="message">
+              <h2>You currently have no employee available.</h2>
+            </div>
+            {% endif %}
+          </div>
+    </section>
+    </div>
+{% endblock %}

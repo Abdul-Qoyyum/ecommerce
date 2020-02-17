@@ -1,0 +1,31 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* cart section*/
+.store-btn{
+	padding:5px;
+	color:white;
+	margin-top:15px;
+	display:block;
+	border-radius:5px;
+}
+.store-card-footer{
+	display:flex;
+	flex-direction: row;
+	justify-content:space-between;
+  align-items: center;
+	height: 70px;
+}
+/* vendor cart */
+
+/* body {
+  background: #eecda3;
+  background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
+  background: linear-gradient(to right, #eecda3, #ef629f);
+  min-height: 100vh;
+} */
+
+/* end of cart section */

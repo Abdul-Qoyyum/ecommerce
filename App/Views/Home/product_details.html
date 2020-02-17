@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block body %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Main content -->
+  <section class="content">
+{% for product in products %}
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3 class="d-inline-block d-sm-none">From {{product.username}} store.+</h3>
+            <div class="col-12">
+              <img src="{{product.thumbnail}}" class="product-image" alt="Product Image" style="max-width: 100%;height: auto;
+              width: 100%;">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <h3 class="my-3"></h3>
+            <div class="row mt-4">
+              <nav class="w-100">
+                <div class="nav nav-tabs" id="product-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
+                  <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Rating</a>
+                </div>
+              </nav>
+            <div class="tab-content p-2 container" id="nav-tabContent">
+
+              <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">{{product.description}}</div>
+
+              <div class="tab-pane fade" id="product-rating" role="tabpanel" aria-labelledby="product-rating-tab">
+
+                {% for rate in individual_rating %}
+                <!-- progress bar -->
+
+                <div>
+                <span>Total rating:</span>
+                <div class="progress" style="width:500px">
+                  <div class="progress-bar" role="progressbar" style="width:{{(((rate.starOne * 1) + (rate.starTwo * 2) + (rate.starThree * 3) +  (rate.starFour * 4) +(rate.starFive * 5) ) // rate.totalratings) * 100}}" aria-valuenow="{{(((rate.starOne * 1) + (rate.starTwo * 2) + (rate.starThree * 3) +  (rate.starFour * 4) +(rate.starFive * 5) )//rate.totalratings)}}" aria-valuemin="0" aria-valuemax="5"></div>
+                </div>
+                </div>
+
+                <!-- end progress bar -->
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+            </div>
+
+
+            <div class="col-12 bg-gray py-2 px-3 mt-4">
+              <h2 class="mb-0">
+                &#8358 {{product.price}}
+              </h2>
+              <h4 class="mt-0">
+              </h4>
+            </div>
+           {% for rate in individual_rating %}
+            <div class="mt-4">
+                <a href="/Checkout/{{rate.id}}/initialize" class="btn-lg btn-flat btn btn-primary">Buy now</a>
+           {% endfor %}
+
+              <div class="btn btn-default btn-lg btn-flat">
+                <i class="fas fa-heart fa-lg mr-2"></i>
+                Add to Wishlist
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="container">
+        <h4>Reviews</h4>
+      {% for review in reviews %}
+      <div class="card">
+        <h5 class="card-header">{{review.username}}</h5>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text"> {{review.description}}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- /.card -->
+      </div>
+      <!-- modal section -->
+
+
+
+        {% if show_comments is same as (0) %}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+          Comment
+        </button>
+        {% endif %}
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Rate product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <!-- form section -->
+            <form action="/Comments/saveusercomments" method="post">
+
+              <div class="modal-body">
+                  <div class="form-group">
+                    <span>star : </span>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" name="rating" id="inlineRadio1" value="1">
+                      <label for="inlineRadio1">1</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" name="rating" id="inlineRadio2" value="2">
+                      <label for="inlineRadio2">2</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" name="rating" id="inlineRadio3" value="3">
+                      <label  for="inlineRadio3">3</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" name="rating" id="inlineRadio3" value="4">
+                      <label  for="inlineRadio3">4</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" name="rating" id="inlineRadio3" value="5">
+                      <label  for="inlineRadio3">5</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Comment</label>
+                  <input type="hidden" name="products_id" value="{{productId}}">
+                  <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3" placeholder="Add comment "></textarea>
+                </div>
+
+
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+
+              <!-- end form section -->
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      <!-- end modal section -->
+{% endfor %}
+  </section>
+  <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

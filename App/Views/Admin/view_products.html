@@ -1,0 +1,61 @@
+{% extends "starter.html" %}
+{% block body %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Main content -->
+<section class="card">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Products in stock.</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            {% if totalProducts > 0 %}
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 10px">id</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th style="width: 40px">Stock Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for product in products_per_page%}
+                  <tr>
+                    <td>{{product.products_id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>
+                      {{product.price}}
+                    </td>
+                    <td>{{product.sku}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-right">
+                {% for i in paginatedPages %}
+
+                {% if i > 1 %}
+                <li class="page-item"><a class="page-link" href="/Admin/home/{{ i - 1 }}/viewproducts">&laquo;</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="/Admin/home/{{i}}/viewproducts">{{i}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <!-- /.card -->
+            {% else %}
+            <div class="message">
+              <h2>Your stock is currently empty.</h2>
+            </div>
+            {% endif %}
+          </div>
+    </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block body %}
+{% if products %}
+<div class="container">
+<div class="row">
+   {% for product in products %}
+   <div class="col-lg-3 col-md-6 mb-3" style="margin-top:60px; display:flex;justify-content:center;">
+
+        <!-- test card -->
+        <div class="card" style="width: 18rem;">
+          <a href="/home/{{product.id}}/viewproductdetails">
+          <img class="card-img-top" src="{{product.thumbnail}}" alt="{{product.name}} image" >
+          <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">&#8358 {{product.price}}</h6>
+            <p class="card-text">
+              {% for rating in ratings %}
+              {% if rating.id == product.id %}
+              <input id="input-{{product.id}}" name="input-{{product.id}}"  class="rating rating-loading"  min="0" max="5"  stars="5" data-size="sm" data-step="1" value="{{rating.rank}}">
+              {% endif %}
+              {% endfor %}
+            </p>
+          </div>
+          </a>
+          <div class="store-card-footer">
+            <a id="{{product.id}}"  class="add btn btn-primary store-btn" style="color:white;">Add to cart</a>
+            <a href="/Checkout/{{product.id}}/initialize" class="btn btn-primary store-btn" style="color:white;">Buy now</a>
+          </div>
+        </div>
+        <!-- end test card -->
+
+
+       </div>
+
+<!-- Modal -->
+<div class="modal fade" id="cartNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+        <button type="button" class="close remove"  data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Added successfully.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn remove btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal secion -->
+
+  {% endfor %}
+</div>
+</div>
+{% else %}
+<div class="container" style="display:flex;justify-content:center;align-items:center;height:100vh;margin-top:60px;">
+  <p>Stock is currently empty.</p>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+      $('.remove').click(function(){
+        $('#cartNotification').attr({'style' : 'display: none;'});
+          $('#cartNotification').removeClass('show');
+          $('#cartNotification').attr({'aria-hidden' : "true"});
+      });
+
+    $('.add').click(function(){
+      $.post('/Cart/addProduct',{id : this.id},function(data){
+         console.log(data);
+         if(data){
+            $('#cartNotification').attr({'style' : 'display: block;padding-right 17px;'});
+              $('#cartNotification').addClass('show');
+              $('#cartNotification').removeAttr("aria-hidden");
+         }
+      });
+     return false;
+    });
+});
+</script>
+{% endblock %}

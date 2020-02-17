@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body %}
+{% if invitation %}
+{% set foo = invitation.admin_id %}
+{% set bar = invitation.tokens_id %}
+{% else %}
+{% set foo = admin_id %}
+{% endif %}
+<div class="page-header header-filter" style="background-image: url('https://res.cloudinary.com/techwise/image/upload/v1578213605/Openmall/micah-williams-lmFJOx7hPc4-unsplash-min_hxrerx.jpg'); background-size: cover; background-position: top center;">
+  <div class="container" style="margin:150px auto 50px auto;">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+        <div class="card card-login">
+<form class="form" action="/home/createemployee" method="post">
+    <div class="card-header card-header-primary text-center">
+      <h4 class="card-title">Create employee account</h4>
+    </div>
+  <div class="card-body">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Firstname</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="fname" value="{{user.fname}}" placeholder="Enter firstname">
+            <span>{{errors.fname}}</span>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Lastname</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="lname" value="{{user.lname}}" placeholder="Enter lastname">
+            <span>{{errors.lname}}</span>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{user.email}}" placeholder="Enter email">
+            <span>{{errors.email}}</span>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Password</label>
+            <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  name="password" value=""  placeholder="Enter password">
+            <span>{{errors.password}}</span>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Address</label>
+            <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3">{{user.address}}</textarea>
+            <span>{{errors.address}}</span>
+          </div>
+  </div>
+  <input type="hidden" name="admin_id" value="{{foo}}">
+  <input type="submit" name="submitButton" class="btn btn-primary" value="Create">
+  <!-- <button type="submit" class="btn btn-primary">Create</button> -->
+</form>
+</div>
+  </div>
+  </div>
+  </div>
+</div>
+{% endblock %}

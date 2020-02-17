@@ -1,0 +1,18 @@
+{% extends "starter.html" %}
+{% block body %}
+  <div class="content-wrapper">
+<!-- form start -->
+  <form role="form" id="quickForm" action="/Admin/home/addemployee" method="post">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control col-md-5" id="exampleInputEmail1" placeholder="Enter email">
+      </div>
+      <span style="color:red">{{errors.email}}</span>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Send Invitation</button>
+    </div>
+  </form>
+  </div>
+{% endblock %}
