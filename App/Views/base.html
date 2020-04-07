@@ -46,7 +46,6 @@
   <!-- main css file -->
   <link rel="stylesheet" href="/src/css/main.css" type="text/css">
   <link rel="stylesheet" href="/src/css/master.css" type="text/css">
-
 </head>
 <body class="landing-page sidebar-collapse">
   {% block nav %}
@@ -77,11 +76,6 @@
             <a class="nav-link" href="/admin/home/{{session_id}}/index"><i class="fa fa-dashboard"></i> Admin Dashboard</a>
             {% endif %}
           </li>
-          {% if user.is_employee %}
-          <li class="nav-item">
-            <a  class="nav-link" href="/staffs/{{session_id}}/dashboard"><i class="fa fa-dashboard"></i> Staff Dashboard</a>
-          </li>
-          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/cart/show"><i class="fas fa-cart-plus fa-lg mr-2"></i> View cart</a>
           </li>
@@ -102,9 +96,6 @@
           </li>
           <li class="nav-item">
             <a  class="nav-link" href="/users/signup"><i class="fa fa-user-plus"></i> Sign up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/staffsLogin"><i class="fa fa-sign-in"></i> staff login</a>
           </li>
           {% endif %}
     </ul>

@@ -28,7 +28,7 @@ class Products extends Model{
      public function getProductsAction(){
        $db = $this->connect();
 
-       $sql = "SELECT * FROM admin_products INNER JOIN products ON products.products_id = admin_products.products_id";
+       $sql = "SELECT * FROM products";
 
        $stmt = $db->query($sql);
 
@@ -176,10 +176,10 @@ class Products extends Model{
     public function getProductsForPagination(int $start, int $stop) : array {
        $db = $this->connect();
 
-       //$sql = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id LIMIT :start, :stop";
+       $sql = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id LIMIT :start, :stop";
 
-       $sql = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id
-               INNER JOIN admin_products ON admin_products.products_id = products.products_id LIMIT :start, :stop";
+//         $sql = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id
+//               INNER JOIN admin_products ON admin_products.products_id = products.products_id LIMIT :start, :stop";
 
        $stmt = $db->prepare($sql);
 

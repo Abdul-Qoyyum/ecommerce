@@ -7,7 +7,7 @@ class Config{
 
          $this->DB_HOST = 'localhost';
 
-         $this->DB_DATABASE = 'ecommerce';
+         $this->DB_DATABASE = 'ecommerceopen';
 
          $this->DB_USERNAME = 'root';
 
@@ -46,7 +46,7 @@ class Config{
 
         $this->SENDER =  getenv("SENDER");
 
-        $this->SHOW_ERROR = false;
+        $this->SHOW_ERROR = true;
 
     }
 }

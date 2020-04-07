@@ -10,23 +10,6 @@ CREATE TABLE users(
   `is_admin`  TINYINT NOT NULL DEFAULT '0'
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE `employees`(
-  `id` INT(11) NOT NULL,
-  `fname` varchar(30) NOT NULL,
-  `lname` varchar(30) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `admin_id` int(11) NOT NULL,
-  `password_reset_hash` varchar(64) DEFAULT NULL,
-  `password_reset_exp` datetime DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  `is_employee` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  FOREIGN KEY(`admin_id`) REFERENCES users(id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 CREATE TABLE `remembered_logins` (
   `tokens_id` varchar(64) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -51,28 +34,11 @@ created_at TIMESTAMP DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE admin_products(
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  products_id INT NOT NULL,
-  admin_id INT NOT NULL,
-  FOREIGN KEY(products_id) REFERENCES products(products_id),
-  FOREIGN KEY(admin_id) REFERENCES users(id)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 CREATE TABLE categories(
 id INT NOT NULL AUTO_INCREMENT,
 product_category VARCHAR(100) NOT NULL UNIQUE KEY,
 created_at TIMESTAMP DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY(id)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE invitations(
-  admin_id INT NOT NULL,
-  tokens_id VARCHAR(64) NOT NULL,
-  expires_at DATETIME NOT NULL,
-  UNIQUE KEY(tokens_id),
-  FOREIGN KEY(admin_id) REFERENCES users(id)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

@@ -49,31 +49,28 @@ use App\Controllers\Authenticated;
           *@return void
           */
             public function indexAction(){
-
               $users = new Users();
 
               $users = $users->getUserByIdAction($_SESSION['user_id']);
+
               $transactions = new Transactions();
 
               $totalSales = $transactions->totalSales($_SESSION['user_id']);
+
               $totalNewOrders  = $transactions->totalNewStoreOrders($_SESSION['user_id']);
+
               $totalFailedTransactions = $transactions->totalFailedTransactions($_SESSION['user_id']);
-              $totalAdminEmployees = $users->totalAdminEmployees($_SESSION['user_id']);
 
-            if($totalSales["total"] == 0){
-              $totals = 1;
-            }else{
-              $totals = $totalSales["total"];
-            }
+              $totals = $totalSales["total"] == 0 ? 1 : $totalSales["total"];
 
-             $bounceRate = ($totalFailedTransactions["total"] /  $totals) * 100;
-             $bounceRate = substr($bounceRate,0,2);
+              $bounceRate = ($totalFailedTransactions["total"] /  $totals) * 100;
+
+              $bounceRate = substr($bounceRate,0,2);
 
               View::twigRender('Admin/index.html',['users'=>$users,
               'totalSales' => $totalSales,
               'totalNewOrders' => $totalNewOrders,
-              'bounceRate' => $bounceRate,
-              'totalAdminEmployees' => $totalAdminEmployees
+              'bounceRate' => $bounceRate
             ]);
 
             }
@@ -137,13 +134,12 @@ use App\Controllers\Authenticated;
           }
 
 
-
-
-          /** Transfer products information to the products model
-          *redirect to the successful page on success
-          *else redisplay the page with the values
-          *@return void
-          */
+       /** Transfer products information to the products model
+        *redirect to the successful page on success
+        *else redisplay the page with the values
+        * @return void
+        * @throws \Exception
+        */
           public function registerProductAction(){
 
             $product = new Products($_POST);
@@ -209,11 +205,10 @@ use App\Controllers\Authenticated;
           }
 
 
-
-
-          /** Sends products details to the Products model for deletion
-          *@return void
-          */
+       /** Sends products details to the Products model for deletion
+        * @return void
+        * @throws \Exception
+        */
           public function removeProductsAction() :void {
             $product =  new Products();
 
@@ -489,9 +484,10 @@ use App\Controllers\Authenticated;
         }
 
 
-        /**
+       /**
         *Delete the employee record
-        *@return void
+        * @return void
+        * @throws \Exception
         */
         public function removeEmployeeAction(){
           $user = new Users($_POST);

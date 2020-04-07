@@ -42,7 +42,7 @@ class Users extends Controller{
 
            $token_hash = $token->getHash();
 
-           if($user->saveUserEmailAndPassword($token_hash)){
+          if($user->saveUserEmailAndPassword($token_hash)){
 
               $this->sendAccountActivationLinkAction('/users/activateuseraccount/', $token_hash,$user);
 
@@ -109,23 +109,20 @@ class Users extends Controller{
        }
 
 
-
-
-
-      /**
-      *Helper method to send account activation link to the user
-      *@param string $link
-      *@param string $store
-      *@param string $token_hash
-      *@return void
-      */
-        public function sendAccountActivationLinkAction(string $link, string $token_hash, string $store = '',object $user) :void{
+    /**
+     *Helper method to send account activation link to the user
+     * @param string $link
+     * @param string $token_hash
+     * @param object $user
+     * @return void
+     */
+        public function sendAccountActivationLinkAction(string $link, string $token_hash, object $user) :void{
 
             $url = "https://" . $_SERVER['HTTP_HOST'] . $link . $token_hash;
 
-            $body = View::twigReturn('Users/email_activation.html', ['url'=>$url, 'store' => $store]);
+            $body = View::twigReturn('Users/email_activation.html', ['url'=>$url]);
 
-            $text = View::twigReturn('Users/email_activation.txt', ['url'=>$url, 'store' => $store]);
+            $text = View::twigReturn('Users/email_activation.txt', ['url'=>$url]);
 
             if(Mail::sendMail('Account activation',[$user->email], $body, $text)){
 

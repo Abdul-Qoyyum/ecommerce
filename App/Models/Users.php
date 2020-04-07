@@ -25,10 +25,10 @@ class Users extends Model{
   *@param int $id
   *@return Object $user of false otherwise
   */
-  public function getUserByIdAction(int $id, $table = null){
+  public function getUserByIdAction(int $id){
    $db = $this->connect();
    // switch tables
-   $users = isset($table) ? $table : 'users';
+   $users = 'users';
 
    $sql = "SELECT * FROM $users WHERE id = :id";
 
@@ -48,16 +48,11 @@ class Users extends Model{
   /** fetch user by their email
   *@return user object or false otherwise
   */
-  public function getUserByEmail(string $table = ''){
+  public function getUserByEmail(){
 
     $db = $this->connect();
-    // switch table value for reusability...
-    if ($table) {
-      $users = $table;
-    }else {
-      $users = 'users';
-    }
 
+    $users = 'users';
 
     $sql = "SELECT * FROM $users WHERE email = :email";
 
@@ -77,11 +72,11 @@ class Users extends Model{
   /** fetch user by their email
   *@return user object or false otherwise
   */
-  public function getUserByUsername(string $table = null){
+  public function getUserByUsername(){
 
     $db = $this->connect();
     // switch table value for reusability...
-    $users = isset($table) ?  $table : 'users';
+    $users = 'users';
 
     $sql = "SELECT * FROM $users WHERE username = :username";
 
@@ -246,7 +241,7 @@ class Users extends Model{
     *@return void
     */
     public function validateUserName(){
-      if($this->name == ''){
+      if($this->username == ''){
           $this->errors["name"] = "User name is required.";
       }
     }
@@ -286,7 +281,7 @@ class Users extends Model{
 
           if(!$this->getUserByUsername()){
            // save details if account does not exist on users and employees table...
-           if(!$this->getUserByEmail() && !$this->getUserByEmail('employees')){
+           if(!$this->getUserByEmail()){
 
             //remember to hash password here for security
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
@@ -306,6 +301,7 @@ class Users extends Model{
             $stmt->bindValue(':token_hash', $token_hash, PDO::PARAM_STR);
 
             return $stmt->execute();
+
               }else{
 
                 $this->errors['email'] = "Account already exist.";
@@ -534,7 +530,7 @@ class Users extends Model{
             // Allow for store account creation if user does not already exist...
              if(!$this->getUserByUsername()){
 
-             if(!$this->getUserByEmail() && !$this->getUserByEmail('employees')){
+             if(!$this->getUserByEmail()){
 
                //remember to hash password here for security
              $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
@@ -810,19 +806,6 @@ class Users extends Model{
 
         return $stmt->execute();
 
-      }
-
-      /**
-      *fetch failed transactions for the admin
-      *@return mixed
-      */
-      public function totalAdminEmployees(int $admin_id){
-        $db = $this->connect();
-        $sql = "SELECT COUNT(*) total FROM employees WHERE admin_id = :admin_id";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':admin_id',$admin_id,PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch();
       }
 
 
